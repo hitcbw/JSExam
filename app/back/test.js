@@ -2,22 +2,22 @@ const { count } = require('console');
 var fs = require('fs');
 const { compile } = require('morgan');
 const { resolve } = require('path')
+var http = require('http')
+    /* var p = new Promise(function(resolve, reject) {
+                {
+                    fs.readFile('./src/static/404.html', (err, data) => {
+                        if (!err) { resolve(data); } else {
+                            reject(data);
+                        }
 
-/* var p = new Promise(function(resolve, reject) {
-            {
-                fs.readFile('./src/static/404.html', (err, data) => {
-                    if (!err) { resolve(data); } else {
-                        reject(data);
-                    }
+                    });
+                };
 
-                });
-            };
-
-            p.then((data) => {
-                console.log(data);
-            }, function ca(params) {
-                console.log('error');
-            }) */
+                p.then((data) => {
+                    console.log(data);
+                }, function ca(params) {
+                    console.log('error');
+                }) */
 
 /**
  * 啥几把回调，callback就是一个以函数作为参数传入Parent function。 js引擎是单线程的，即函数栈当前只会允许栈顶函数运行，
@@ -68,5 +68,22 @@ md5Psw = md5('chenbowen')
 id = 1
 let sql = `select count(*) from user where userId = ${id} and password = '${md5Psw}'`;
 console.log(sql); */
-var t = { "count(*)": 1 }
-console.log(t['count(*)'])
+/* var t = { "count(*)": 1 }
+console.log(t['count(*)']) */
+var querystring = require('querystring');
+http.createServer((req, res) => {
+    var body = '';
+    req.on('data', function(chunk) {
+        body += chunk; //一定要使用+=，如果body=chunk，因为请求favicon.ico，body会等于{}
+        console.log("chunk:", chunk);
+    });
+
+    //在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
+    req.on('end', function() {
+        // 解析参数
+        body = querystring.parse(body); //将一个字符串反序列化为一个对象
+        console.log("body:", body);
+        // 设置响应头部信息及编码\<br><br>      res .writeHead(200, {'Content-Type': 'text/html; charset=utf8'});
+        res.end();
+    })
+}).listen(3000);
