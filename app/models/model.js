@@ -9,6 +9,7 @@ class Model {
     static connect() {
         Model.conn = mysql.createConnection({
             host: '127.0.0.1',
+            port: '3306',
             user: 'root',
             password: 'chenbowen',
             database: 'exam'
@@ -30,12 +31,13 @@ class Model {
 
     static query(sql, params = []) {
         return new Promise((resolve, reject) => {
+            this.connect();
             Model.conn.query(sql, params, (err, data) => {
-                this.conn();
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve(data);
+                    this.disconnect();
                 }
             });
 

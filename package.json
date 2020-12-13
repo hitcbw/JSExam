@@ -2,7 +2,7 @@
     "name": "exam",
     "version": "1.0.0",
     "description": "",
-    "main": "./src/js/models/userModel.js",
+    "main": "./src/js/app.js",
     "dependencies": {
         "ali-mysql-client": "^1.0.7",
         "body-parser": "^1.19.0",

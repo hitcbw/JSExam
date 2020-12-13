@@ -1,3 +1,4 @@
+const { count } = require('console');
 var fs = require('fs');
 const { compile } = require('morgan');
 const { resolve } = require('path')
@@ -62,5 +63,10 @@ var p = ptest();
 p.then((data) => {
     console.log(data);
 }) */
-const md5 = require('md5')
-console.log(md5('chenbowen'))
+/* const md5 = require('md5')
+md5Psw = md5('chenbowen')
+id = 1
+let sql = `select count(*) from user where userId = ${id} and password = '${md5Psw}'`;
+console.log(sql); */
+var t = { "count(*)": 1 }
+console.log(t['count(*)'])
