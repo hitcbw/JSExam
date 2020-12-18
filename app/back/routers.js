@@ -25,12 +25,19 @@ exports.initializeRouter = function(app) {
 
 
 
-    apiInterface.get('/add', (req, res) => {
+    apiInterface.post('/add', (req, res) => {
         res.send('api add user');
     })
-    apiInterface.get('/update', (req, res) => {
+    apiInterface.put('/update', (req, res) => {
         res.send('api update user');
     })
+    apiInterface.get('/getUser', (req, res) => {
+        res.send('api get user');
+    })
+    apiInterface.get('/deleteUser', (req, res) => {
+        res.send('api delete user');
+    })
+
 
     adminInterface.get('/login', (req, res) => {
         res.send('admin interface' + ' login');
@@ -49,6 +56,12 @@ exports.initializeRouter = function(app) {
                 res.send(data);
             }
         });
+
+        // 同步方法无法通过var data = AsyncFunc()获取值，因为异步函数是延时执行，值在异步完成之前是Undefined，
+        //没有什么意义，通过sync或者通过回调函数才能获取，readFile本身是不会返回任何值的
+        /* var data = fs.readFileSync('./src/static/404.html');
+        res.send(data); */
+
 
     })
 
